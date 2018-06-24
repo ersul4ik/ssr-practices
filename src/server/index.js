@@ -1,39 +1,45 @@
 import express from "express"
-import cors from "cors"
-import serialize from "serialize-javascript"
 import React from 'react'
 import { renderToString } from "react-dom/server"
-
-import { fetchAllTasks } from '../shared/api'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import rootReducer from '../store/index'
 import App from '../shared/App'
 
 const app = express()
 
-app.use(cors())
-
 app.use(express.static("public"))
 
-app.get('*', (req, res, next) => {
-  fetchAllTasks()
-    .then((data) => {
-      const markup = renderToString(<App data={data.data} />)
+app.use(handleRender)
 
-      res.send(`
-    <!DOCTYPE html>
-    <html>
+function handleRender(req, res) {
+  const store = createStore(rootReducer)
+
+  const html = renderToString(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+  const preloadedState = store.getState()
+
+  res.send(renderFullPage(html, preloadedState))
+}
+
+function renderFullPage(html, preloadedState) {
+  return `
+  <!DOCTYPE html>
+  <html>
       <head>
-        <title>SSR with RR</title>
+        <title>Redux Universal Example</title>
         <script src="/bundle.js" defer></script>
-        <script>window.__INITIAL_DATA__ = ${serialize(data.data)}</script>
-      </head>
-
+        </head>
       <body>
-        <div id="app">${markup}</div>
-      </body>
+        <div id="root">${html}</div>
+        <script>window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}</script>
+        </body>
     </html>
-  `)
-    })
-})
+    `
+}
 
 
 app.listen(3000, () => {

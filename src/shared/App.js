@@ -1,11 +1,13 @@
-import React, { Component } from 'react'
-import Grid from './Grid';
+import React, { Component } from 'react';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Grid data={this.props.data} />
+        <form onSubmit={() => console.log('APP')}>
+        <input></input>
+              <button type="submit">Why</button>
+          </form>
       </div>
     )
   }
