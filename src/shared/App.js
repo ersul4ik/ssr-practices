@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
+import AddTodos from './containers/AddTodos';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={() => console.log('APP')}>
-        <input></input>
-              <button type="submit">Why</button>
-          </form>
+        <AddTodos/>
       </div>
     )
   }
