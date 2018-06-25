@@ -4,31 +4,37 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack -w & nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "npm test -- --watch"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setup/setupEnzyme.js",
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/setup/"
+    ]
   },
   "author": "",
   "description": "Simple react ssr app",
-  "babel": {
-    "presets": [
-      "env",
-      "react"
-    ],
-    "plugins": [
-      "transform-object-rest-spread"
-    ]
-  },
   "devDependencies": {
     "axios": "^0.18.0",
     "babel-core": "^6.26.0",
+    "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
+    "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "bootstrap": "^4.1.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
+    "fetch-mock": "^6.4.4",
+    "jest": "^23.1.0",
     "nodemon": "^1.12.5",
     "react": "^16.4.1",
     "react-redux": "^5.0.7",
+    "react-test-renderer": "^16.4.1",
     "redux": "^4.0.0",
+    "redux-mock-store": "^1.5.3",
     "redux-thunk": "^2.3.0",
     "webpack": "^3.10.0",
     "webpack-node-externals": "^1.6.0"
