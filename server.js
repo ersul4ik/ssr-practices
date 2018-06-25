@@ -77,6 +77,12 @@ module.exports = require("react-redux");
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux");
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86,11 +92,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.SELECT_ALL_TODO = exports.DELETE_TODO = exports.ADD_TODO = undefined;
+exports.testing = testing;
 exports.fetchTodos = fetchTodos;
 exports.deleteTodo = deleteTodo;
 exports.addTask = addTask;
 
-var _axios = __webpack_require__(12);
+var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -101,6 +108,13 @@ var ADD_TODO = exports.ADD_TODO = 'ADD_TODO';
 var DELETE_TODO = exports.DELETE_TODO = 'DELETE_TODO';
 
 var SELECT_ALL_TODO = exports.SELECT_ALL_TODO = 'SELECT_ALL_TODO';
+
+function testing(text) {
+  return {
+    type: "TEST",
+    text: text
+  };
+}
 
 function fetchTodos() {
   return function (dispatch) {
@@ -133,12 +147,6 @@ function addTask(text) {
 }
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("redux");
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -155,7 +163,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _server = __webpack_require__(6);
 
-var _redux = __webpack_require__(3);
+var _redux = __webpack_require__(2);
 
 var _reactRedux = __webpack_require__(1);
 
@@ -163,7 +171,7 @@ var _App = __webpack_require__(7);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _store = __webpack_require__(15);
+var _store = __webpack_require__(13);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -188,7 +196,7 @@ function handleRender(req, res) {
 }
 
 function renderFullPage(html, preloadedState) {
-  return "\n  <!DOCTYPE html>\n  <html>\n      <head>\n        <title>Redux Universal Example</title>\n        <script src=\"/bundle.js\" defer></script>\n        </head>\n      <body>\n        <div id=\"root\">" + html + "</div>\n        <script>window.__PRELOADED_STATE__ = " + JSON.stringify(preloadedState).replace(/</g, "\\u003c") + "</script>\n        </body>\n    </html>\n    ";
+  return "\n  <!DOCTYPE html>\n  <html>\n      <head>\n        <title>Redux SSr</title>\n        <script src=\"/bundle.js\" defer></script>\n        </head>\n      <body>\n        <div id=\"root\">" + html + "</div>\n        <script>window.__PRELOADED_STATE__ = " + JSON.stringify(preloadedState).replace(/</g, "\\u003c") + "</script>\n        </body>\n    </html>\n    ";
 }
 
 app.listen(3000, function () {
@@ -228,7 +236,7 @@ var _AddTodos = __webpack_require__(8);
 
 var _AddTodos2 = _interopRequireDefault(_AddTodos);
 
-var _Todos = __webpack_require__(13);
+var _Todos = __webpack_require__(12);
 
 var _Todos2 = _interopRequireDefault(_Todos);
 
@@ -285,17 +293,15 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(1);
 
-__webpack_require__(9);
-
-var _Button = __webpack_require__(10);
+var _Button = __webpack_require__(9);
 
 var _Button2 = _interopRequireDefault(_Button);
 
-var _Label = __webpack_require__(11);
+var _Label = __webpack_require__(10);
 
 var _Label2 = _interopRequireDefault(_Label);
 
-var _actions = __webpack_require__(2);
+var _actions = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -384,12 +390,6 @@ exports.default = Form;
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
-
-module.exports = require("bootstrap/dist/css/bootstrap.css");
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -416,7 +416,7 @@ var Button = function Button(props) {
 exports.default = Button;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -443,13 +443,13 @@ var Label = function Label(props) {
 exports.default = Label;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = require("axios");
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -465,7 +465,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(1);
 
-var _ListTodos = __webpack_require__(14);
+var _ListTodos = __webpack_require__(16);
 
 var _ListTodos2 = _interopRequireDefault(_ListTodos);
 
@@ -485,7 +485,81 @@ var List = (0, _reactRedux.connect)(mapStateToProps, null)(_ListTodos2.default);
 exports.default = List;
 
 /***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(2);
+
+var _reduxThunk = __webpack_require__(14);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _store = __webpack_require__(15);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var store = (0, _redux.createStore)(_store2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+exports.default = store;
+
+/***/ }),
 /* 14 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-thunk");
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _actions = __webpack_require__(3);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var inititalState = {
+  todos: []
+};
+
+var rootReducer = function rootReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : inititalState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.ADD_TODO:
+      return _extends({}, state, { todos: [].concat(_toConsumableArray(state.todos), [action.payload]) });
+    case _actions.SELECT_ALL_TODO:
+      return _extends({}, state, { todos: action.payload });
+    case _actions.DELETE_TODO:
+      return _extends({}, state, { todos: state.todos.filter(function (todo) {
+          return todo.task_id !== action.payload;
+        }) });
+    default:
+      return state;
+  }
+};
+
+exports.default = rootReducer;
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -503,7 +577,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(1);
 
-var _actions = __webpack_require__(2);
+var _actions = __webpack_require__(3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -583,80 +657,6 @@ var ListTodos = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(ListTodos);
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _redux = __webpack_require__(3);
-
-var _reduxThunk = __webpack_require__(16);
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-var _store = __webpack_require__(17);
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var store = (0, _redux.createStore)(_store2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
-
-exports.default = store;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-module.exports = require("redux-thunk");
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _actions = __webpack_require__(2);
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var inititalState = {
-  todos: []
-};
-
-var rootReducer = function rootReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : inititalState;
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _actions.ADD_TODO:
-      return _extends({}, state, { todos: [].concat(_toConsumableArray(state.todos), [action.payload]) });
-    case _actions.SELECT_ALL_TODO:
-      return _extends({}, state, { todos: action.payload });
-    case _actions.DELETE_TODO:
-      return _extends({}, state, { todos: state.todos.filter(function (todo) {
-          return todo.task_id !== action.payload;
-        }) });
-    default:
-      return state;
-  }
-};
-
-exports.default = rootReducer;
 
 /***/ })
 /******/ ]);

@@ -3,7 +3,6 @@ import expect from 'expect';
 import { shallow, mount, render } from 'enzyme'
 
 import Button from './index'
-import Foo from './Foo'
 
 describe('Test BUTTON PROPS', () => {
     it('handles clicks', () => {
