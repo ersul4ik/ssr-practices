@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,129 +71,12 @@ module.exports = require("react");
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _express = __webpack_require__(2);
-
-var _express2 = _interopRequireDefault(_express);
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _server = __webpack_require__(3);
-
-var _redux = __webpack_require__(4);
-
-var _reactRedux = __webpack_require__(5);
-
-var _index = __webpack_require__(6);
-
-var _index2 = _interopRequireDefault(_index);
-
-var _App = __webpack_require__(9);
-
-var _App2 = _interopRequireDefault(_App);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var app = (0, _express2.default)();
-
-app.use(_express2.default.static("public"));
-
-app.use(handleRender);
-
-function handleRender(req, res) {
-  var store = (0, _redux.createStore)(_index2.default);
-
-  var html = (0, _server.renderToString)(_react2.default.createElement(
-    _reactRedux.Provider,
-    { store: store },
-    _react2.default.createElement(_App2.default, null)
-  ));
-  var preloadedState = store.getState();
-
-  res.send(renderFullPage(html, preloadedState));
-}
-
-function renderFullPage(html, preloadedState) {
-  return "\n  <!DOCTYPE html>\n  <html>\n      <head>\n        <title>Redux Universal Example</title>\n        <script src=\"/bundle.js\" defer></script>\n        </head>\n      <body>\n        <div id=\"root\">" + html + "</div>\n        <script>window.__PRELOADED_STATE__ = " + JSON.stringify(preloadedState).replace(/</g, "\\u003c") + "</script>\n        </body>\n    </html>\n    ";
-}
-
-app.listen(3000, function () {
-  console.log("Server is listening on port: 3000");
-});
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-dom/server");
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = require("redux");
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports) {
 
 module.exports = require("react-redux");
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _actions = __webpack_require__(7);
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var inititalState = {
-  todos: []
-};
-
-var rootReducer = function rootReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : inititalState;
-  var action = arguments[1];
-
-  switch (action.type) {
-    case _actions.ADD_TODO:
-      return _extends({}, state, { todos: [].concat(_toConsumableArray(state.todos), [action.payload]) });
-    case _actions.SELECT_ALL_TODO:
-      return _extends({}, state, { todos: action.payload });
-    case _actions.DELETE_TODO:
-      return _extends({}, state, { todos: state.todos.filter(function (todo) {
-          return todo.task_id !== action.payload;
-        }) });
-    default:
-      return state;
-  }
-};
-
-exports.default = rootReducer;
-
-/***/ }),
-/* 7 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -207,7 +90,7 @@ exports.fetchTodos = fetchTodos;
 exports.deleteTodo = deleteTodo;
 exports.addTask = addTask;
 
-var _axios = __webpack_require__(8);
+var _axios = __webpack_require__(12);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -250,13 +133,82 @@ function addTask(text) {
 }
 
 /***/ }),
-/* 8 */
+/* 3 */
 /***/ (function(module, exports) {
 
-module.exports = require("axios");
+module.exports = require("redux");
 
 /***/ }),
-/* 9 */
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _express = __webpack_require__(5);
+
+var _express2 = _interopRequireDefault(_express);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _server = __webpack_require__(6);
+
+var _redux = __webpack_require__(3);
+
+var _reactRedux = __webpack_require__(1);
+
+var _App = __webpack_require__(7);
+
+var _App2 = _interopRequireDefault(_App);
+
+var _store = __webpack_require__(15);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var app = (0, _express2.default)();
+
+app.use(_express2.default.static("public"));
+
+app.use(handleRender);
+
+function handleRender(req, res) {
+
+  var html = (0, _server.renderToString)(_react2.default.createElement(
+    _reactRedux.Provider,
+    { store: _store2.default },
+    _react2.default.createElement(_App2.default, null)
+  ));
+  var preloadedState = _store2.default.getState();
+
+  res.send(renderFullPage(html, preloadedState));
+}
+
+function renderFullPage(html, preloadedState) {
+  return "\n  <!DOCTYPE html>\n  <html>\n      <head>\n        <title>Redux Universal Example</title>\n        <script src=\"/bundle.js\" defer></script>\n        </head>\n      <body>\n        <div id=\"root\">" + html + "</div>\n        <script>window.__PRELOADED_STATE__ = " + JSON.stringify(preloadedState).replace(/</g, "\\u003c") + "</script>\n        </body>\n    </html>\n    ";
+}
+
+app.listen(3000, function () {
+  console.log("Server is listening on port: 3000");
+});
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("express");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-dom/server");
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -271,6 +223,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _AddTodos = __webpack_require__(8);
+
+var _AddTodos2 = _interopRequireDefault(_AddTodos);
+
+var _Todos = __webpack_require__(13);
+
+var _Todos2 = _interopRequireDefault(_Todos);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -295,18 +255,8 @@ var App = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(
-          'form',
-          { onSubmit: function onSubmit() {
-              return console.log('APP');
-            } },
-          _react2.default.createElement('input', null),
-          _react2.default.createElement(
-            'button',
-            { type: 'submit' },
-            'Why'
-          )
-        )
+        _react2.default.createElement(_AddTodos2.default, null),
+        _react2.default.createElement(_Todos2.default, null)
       );
     }
   }]);
@@ -315,6 +265,398 @@ var App = function (_Component) {
 }(_react.Component);
 
 exports.default = App;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(1);
+
+__webpack_require__(9);
+
+var _Button = __webpack_require__(10);
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _Label = __webpack_require__(11);
+
+var _Label2 = _interopRequireDefault(_Label);
+
+var _actions = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    addTask: function addTask(todo) {
+      return dispatch((0, _actions.addTask)(todo));
+    }
+  };
+};
+
+var ConnectedForm = function (_React$Component) {
+  _inherits(ConnectedForm, _React$Component);
+
+  function ConnectedForm() {
+    _classCallCheck(this, ConnectedForm);
+
+    var _this = _possibleConstructorReturn(this, (ConnectedForm.__proto__ || Object.getPrototypeOf(ConnectedForm)).call(this));
+
+    _this.state = {
+      description: ''
+    };
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(ConnectedForm, [{
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState({ description: event.target.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var description = this.state.description;
+
+      if (!description.length) {
+        return 403;
+      } else {
+        this.props.addTask({ description: description });
+      }
+      this.setState({ description: '' });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var description = this.state.description;
+
+      return _react2.default.createElement(
+        'form',
+        { onSubmit: this.handleSubmit },
+        _react2.default.createElement(
+          'div',
+          { className: 'form-group' },
+          _react2.default.createElement(_Label2.default, { title: 'add task' }),
+          _react2.default.createElement('input', {
+            type: 'text',
+            className: 'form-control',
+            id: 'title',
+            value: description,
+            onChange: this.handleChange
+          })
+        ),
+        _react2.default.createElement(_Button2.default, {
+          name: 'save',
+          type: 'submit'
+        })
+      );
+    }
+  }]);
+
+  return ConnectedForm;
+}(_react2.default.Component);
+
+var Form = (0, _reactRedux.connect)(null, mapDispatchToProps)(ConnectedForm);
+
+exports.default = Form;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = require("bootstrap/dist/css/bootstrap.css");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+                          value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Button = function Button(props) {
+                          return _react2.default.createElement(
+                                                    "button",
+                                                    { className: "square", type: props.type, onClick: props.onClick },
+                                                    props.name
+                          );
+};
+
+exports.default = Button;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Label = function Label(props) {
+  return _react2.default.createElement(
+    'label',
+    null,
+    props.title
+  );
+};
+
+exports.default = Label;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+module.exports = require("axios");
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(1);
+
+var _ListTodos = __webpack_require__(14);
+
+var _ListTodos2 = _interopRequireDefault(_ListTodos);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return { todos: state.todos };
+};
+
+var Todos = function Todos(_ref) {
+  var todos = _ref.todos;
+  return _react2.default.createElement(_ListTodos2.default, { todos: todos });
+};
+
+var List = (0, _reactRedux.connect)(mapStateToProps, null)(_ListTodos2.default);
+
+exports.default = List;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(1);
+
+var _actions = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    deleteTodo: function deleteTodo(id) {
+      return dispatch((0, _actions.deleteTodo)(id));
+    },
+    fetchTodos: function fetchTodos() {
+      return dispatch((0, _actions.fetchTodos)());
+    }
+  };
+};
+
+var ListTodos = function (_React$Component) {
+  _inherits(ListTodos, _React$Component);
+
+  function ListTodos() {
+    _classCallCheck(this, ListTodos);
+
+    return _possibleConstructorReturn(this, (ListTodos.__proto__ || Object.getPrototypeOf(ListTodos)).apply(this, arguments));
+  }
+
+  _createClass(ListTodos, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.props.fetchTodos();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var todos = this.props.todos;
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'ul',
+          { className: 'list-group' },
+          todos.map(function (todo) {
+            return _react2.default.createElement(
+              'li',
+              { key: todo.task_id, className: 'list-group-item' },
+              todo.description,
+              _react2.default.createElement(
+                'button',
+                {
+                  type: 'button',
+                  className: 'close right',
+                  'aria-label': 'Close',
+                  onClick: function onClick() {
+                    return _this2.props.deleteTodo(todo.task_id);
+                  },
+                  style: { marginLeft: '5px' }
+                },
+                _react2.default.createElement(
+                  'span',
+                  { 'aria-hidden': 'true' },
+                  '\xD7'
+                )
+              )
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return ListTodos;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRedux.connect)(null, mapDispatchToProps)(ListTodos);
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(3);
+
+var _reduxThunk = __webpack_require__(16);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _store = __webpack_require__(17);
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var store = (0, _redux.createStore)(_store2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+exports.default = store;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports = require("redux-thunk");
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _actions = __webpack_require__(2);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var inititalState = {
+  todos: []
+};
+
+var rootReducer = function rootReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : inititalState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.ADD_TODO:
+      return _extends({}, state, { todos: [].concat(_toConsumableArray(state.todos), [action.payload]) });
+    case _actions.SELECT_ALL_TODO:
+      return _extends({}, state, { todos: action.payload });
+    case _actions.DELETE_TODO:
+      return _extends({}, state, { todos: state.todos.filter(function (todo) {
+          return todo.task_id !== action.payload;
+        }) });
+    default:
+      return state;
+  }
+};
+
+exports.default = rootReducer;
 
 /***/ })
 /******/ ]);

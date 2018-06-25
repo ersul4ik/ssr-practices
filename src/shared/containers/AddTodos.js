@@ -3,14 +3,13 @@ import { connect } from 'react-redux'
 
 import Button from '../components/atoms/Button'
 import Label from '../components/atoms/Label'
-import addTask  from '../actions'
+import { addTask } from '../actions'
 
 const mapDispatchToProps = (dispatch) => {
   return {
     addTask: todo => dispatch(addTask(todo)),
   }
 }
-
 
 class ConnectedForm extends React.Component {
   constructor() {
@@ -28,14 +27,20 @@ class ConnectedForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.addTask({ description })
+    const { description } = this.state
+    if (!description.length) {
+      return 403
+    }
+    else {
+      this.props.addTask({ description })
+    }
     this.setState({ description: '' })
   }
 
   render() {
     const { description } = this.state
     return (
-      <form onSubmit={() => console.log('ok')}>
+      <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <Label title="add task" />
           <input
@@ -45,9 +50,11 @@ class ConnectedForm extends React.Component {
             value={description}
             onChange={this.handleChange}
           />
-          <h5>test</h5>
         </div>
-        <button type="submit">add</button>
+        <Button
+          name="save"
+          type="submit"
+        />
       </form>
     )
   }

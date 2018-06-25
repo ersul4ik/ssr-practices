@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ListTodos } from "components";
+import ListTodos from "../components/organisms/ListTodos";
 
 const mapStateToProps = (state) => {
   return { todos: state.todos }

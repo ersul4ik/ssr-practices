@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { Button } from 'components'
 import { deleteTodo, fetchTodos } from '../../../actions'
 
 const mapDispatchToProps = (dispatch) => {
@@ -10,7 +9,6 @@ const mapDispatchToProps = (dispatch) => {
     fetchTodos: () => dispatch(fetchTodos()),
   }
 }
-
 
 class ListTodos extends React.Component {
   componentWillMount() {

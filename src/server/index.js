@@ -3,8 +3,8 @@ import React from 'react'
 import { renderToString } from "react-dom/server"
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import rootReducer from '../store/index'
 import App from '../shared/App'
+import store from '../store'
 
 const app = express()
 
@@ -13,7 +13,6 @@ app.use(express.static("public"))
 app.use(handleRender)
 
 function handleRender(req, res) {
-  const store = createStore(rootReducer)
 
   const html = renderToString(
     <Provider store={store}>
@@ -30,7 +29,7 @@ function renderFullPage(html, preloadedState) {
   <!DOCTYPE html>
   <html>
       <head>
-        <title>Redux Universal Example</title>
+        <title>Redux SSr</title>
         <script src="/bundle.js" defer></script>
         </head>
       <body>
