@@ -1,20 +1,19 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
+import { shallowToJson } from 'enzyme-to-json';
 import configureMockStore from 'redux-mock-store';
-import expect from 'expect';
 import { Provider } from 'react-redux';
 
-import ListTodos, {mapDispatchToProps} from '../../src/shared/components/organisms/ListTodos';
-import { deleteTodo } from '../../src/shared/actions/index'
+import ListTodos from '../../src/shared/containers/Todos';
 
 const mockStore = configureMockStore();
 
-describe('Test ListTodos', () => {
+describe('Link', () => {
     let wrapper, store;
 
     beforeEach(() => {
         const initialState = {
-            todos: {id:1, description: 'first'}
+            todos: { id: 1, description: 'first' }
         };
         store = mockStore(initialState);
         wrapper = shallow(
@@ -23,9 +22,7 @@ describe('Test ListTodos', () => {
             </Provider>
         );
     });
-
-    it('test list props', () => {
-        expect(wrapper.props().todos.getState()).toEqual({ todos: {id:1, description: 'first'} })
+    it('should render correctly', () => {
+        expect(shallowToJson(wrapper)).toMatchSnapshot();
     });
-
-})
+});
