@@ -1,8 +1,8 @@
 import React from 'react'
 import expect from 'expect';
-import { shallow, mount, render } from 'enzyme'
+import { shallow } from 'enzyme'
 
-import Button from './index'
+import Button from '../../src/shared/components/atoms/Button/index'
 
 describe('Test BUTTON PROPS', () => {
     it('handles clicks', () => {

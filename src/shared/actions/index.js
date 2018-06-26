@@ -6,14 +6,6 @@ export const DELETE_TODO = 'DELETE_TODO'
 
 export const SELECT_ALL_TODO = 'SELECT_ALL_TODO'
 
-export function testing(text){
-  return{
-    type: "TEST",
-    text
-  }
-}
-
-
 export function fetchTodos() {
   return dispatch =>  
     axios.get('http://127.0.0.1:4000/')
@@ -41,5 +33,11 @@ export function addTask(text) {
     }).then(() => {
       dispatch({ type: ADD_TODO, payload: text })
     })
+  }
+}
+
+export function testing(text) {
+  return {
+    type: "OK"  
   }
 }
