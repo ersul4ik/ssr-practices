@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import AddTodos from './containers/AddTodos';
+import AddTodo from './containers/AddTodo'
 import Todos from './containers/Todos';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <AddTodos />
+        <AddTodo />
         <Todos />
       </div>
     )

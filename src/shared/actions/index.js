@@ -23,6 +23,14 @@ export function tasksDeleteSuccess(id) {
   }
 }
 
+export function tasksAddSuccess(description) {
+  console.log('in success add', description)
+  return {
+    type: ADD_TODO,
+    payload: description
+  }
+}
+
 export function fetchTodos() {
   return dispatch =>
     axios.get('http://127.0.0.1:4000/')
@@ -41,13 +49,11 @@ export function deleteTodo(task_id) {
 }
 
 export function addTask(text) {
-  return (dispatch) => {
+  return dispatch => {
     axios({
       method: 'post',
       url: 'http://127.0.0.1:4000/todos',
       params: text,
-    }).then(() => {
-      dispatch({ type: ADD_TODO, payload: text })
-    })
+    }).then(dispatch(tasksAddSuccess(text)))
   }
 }
