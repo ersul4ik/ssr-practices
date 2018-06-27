@@ -17,6 +17,7 @@
   "description": "Simple react ssr app",
   "devDependencies": {
     "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.15.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.2",
@@ -30,6 +31,7 @@
     "enzyme-to-json": "^3.3.4",
     "fetch-mock": "^6.4.4",
     "jest": "^23.1.0",
+    "moxios": "^0.4.0",
     "nodemon": "^1.12.5",
     "react": "^16.4.1",
     "react-redux": "^5.0.7",

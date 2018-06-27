@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { deleteTodo, fetchTodos } from '../../../actions'
+import { deleteTodo, fetchTodos, tasksFetchDataSuccess} from '../../../actions'
 
 export const mapDispatchToProps = (dispatch) => {
   return {
@@ -21,7 +21,7 @@ class ListTodos extends React.Component {
       <div>
         <ul className="list-group">
           {todos.map(todo =>
-            (<li key={todo.task_id} className="list-group-item">
+            (<li key={todo.task_id} name="nameTask" className="list-group-item">
               {todo.description}
               <button
                 type="button"

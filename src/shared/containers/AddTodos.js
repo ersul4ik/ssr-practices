@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Button from '../components/atoms/Button'
 import Label from '../components/atoms/Label'
 import { addTask, testing } from '../actions'
+import getAllCats from '../../store/api'
 
 export const mapDispatchToProps = (dispatch) => {
   return {
